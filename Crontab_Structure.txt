@@ -1,0 +1,106 @@
+Cron jobs are used to schedule tasks or commands that need to be ran at certain points in time.
+
+# Getting Started
+
+Command:    Cmd + Spacebar, type 'Terminal'
+Purpose:    Open Terminal Window
+
+Command:    crontab -l
+Purpose:    List all cron jobs (This will show blank for now.)
+
+Crontab Editor is vim (Default). If you want to change it to Nano:
+    Command:    export EDITOR=/usr/bin/nano
+    Purpose:    Change editor to nano
+
+Command:    crontab -e
+Purpose:    Enter (VIM) edit mode. (Add, Remove, and Modify cron jobs)
+
+Command:    Press i
+Purpose:    Enter Insert Mode
+
+Command:    Press Esc, type :w, press Enter
+Purpose:    To save a file
+
+Command:    Press Esc, type :x, press Enter
+Purpose:    To save and quit
+
+Command:    type :q, press Enter
+Purpose:    To quit (VIM)
+
+Command:    cat /tmp/test.tsx
+Purpose:    View the file (cat means to print the content of a file onto the standard output stream, allowing us to view contents of the file.)
+
+# Cron commands
+Cron values are used in the Unix-based cron scheduling system to define when and how often tasks or jobs should be executed. Cron uses a set of time-based fields to specify the schedule. The format consists of five fields, each representing a time unit. These fields are, in order:
+
+<ol>
+<li>Minutes (0-59): The first field represents the minutes of the hour when the task will be executed. Valid values range from 0 to 59.
+</li><li>Hours (0-23): The second field represents the hours of the day when the task will run. Valid values range from 0 to 23 in a 24-hour format.
+</li><li>Day of the Month (1-31): The third field specifies the day of the month when the task should run. Valid values range from 1 to 31.
+</li><li>Month (1-12 or Jan-Dec): The fourth field designates the month when the task should be executed. You can use either numeric values (1-12) or the three-letter abbreviations of the month (e.g., Jan, Feb, Mar).
+</li><li>Day of the Week (0-7 or Sun-Sat): The fifth and final field defines the day of the week when the task is scheduled. Values can range from 0 to 7, where both 0 and 7 represent Sunday, or you can use the three-letter abbreviations of the days (e.g., Sun, Mon, Tue).
+</li></ol>
+Each of these fields is separated by whitespace. You can use various special characters within these fields to create more complex schedules:
+
+<ul>
+<li>An asterisk (*) signifies "every" or "any" value. For example, "*" in the minutes field means "every minute."
+</li><li>A comma (,) allows you to specify a list of values. For example, "1,15,30" in the minutes field means the task will run at minutes 1, 15, and 30 past the hour.
+</li><li>A hyphen (-) denotes a range of values. For example, "10-15" in the minutes field means the task will run from minute 10 to minute 15 past the hour.
+</li><li>A slash (/) allows you to specify intervals. For example, "*/5" in the minutes field means the task will run every 5 minutes.
+</li><li>You can also combine these characters to create more complex schedules. For example, "0 2-6,18-23 * * 1-5" means the task will run at minute 0, between 2AM and 6AM, and between the 18th and 23rd of each month, every weekday (1-5).
+</li><li>'>>' means to append to the file
+</li><li>'>' would mean to overwrite the file.
+</li></ul>
+
+## Here are some examples of cron schedules:
+
+* * * * *:      Run every minute.
+0 * * * *:      Run every hour, on the hour.
+0 0 * * *:      Run once a day, at midnight.
+0 12 * * 1-5:   Run every weekday (Monday to Friday) at noon.
+0 0 * * 1:      Run every Monday at midnight.
+30 2 * 1,6 *:   Run at 2:30 AM on the 1st and 6th day of the month.
+
+0 5 * * 5 rm -rf /tmp/*                                     Empty temp folder every Friday at 5pm
+0 0 * * * rsync -a ~/Pictures/ ~/Google\ Drive/Pictures/    Backup images to Google Drive, every night at midnight
+* * * * * conda activate hack                               Activate Virtual Environment, every minute
+
+## Cron Job - Example 1
+Command:    Cmd + Spacebar, type 'Terminal'
+Purpose:    Open Terminal Window
+
+Command:    crontab -e
+Purpose:    Enter edit mode
+
+Command:    Press i
+Purpose:    Enter Insert Mode
+
+Command:    * * * * * echo "Cron is running at $(date)" >> /tmp/test.txt.
+Purpose:    Output some text into a text file every minute of every hour of every day of every month
+
+Command:    Press Esc, type :w, press Enter
+Purpose:    Save the file
+
+Command:    type :q, press Enter
+Purpose:    Quit (VIM editor)
+
+Command:    crontab -l
+Purpose:    List your cron job(s) (Your command should now be listed.)
+
+Command:    cat /tmp/test.tsx
+Purpose:    View the file
+
+### Example 1 - Summary
+Now, every minute, "Cron is running at the runtime" will be appended to the /tmp/test.txt. file.
+
+# It is helpful to include the below syntax as a reminder within your cronjobs
+
+
+##### Crontab Structure #####
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12) (JAN-DEC)
+# │ │ │ │ ┌───────────── day of week (0 - 6) (SUN to SAT);
+# │ │ │ │ │
+# │ │ │ │ │
